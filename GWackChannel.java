@@ -20,12 +20,12 @@ public class GWackChannel {
 
 	public void serve() {
 		(new DistributionThread()).start();
-		BufferedReader credReader;
+		BufferedReader nameReader;
 		try {
 			while (true) {
 				Socket clientSock = serverSock.accept();
-				credReader = new BufferedReader(new InputStreamReader(clientSock.getInputStream()));
-				String username = credReader.readLine();
+				nameReader = new BufferedReader(new InputStreamReader(clientSock.getInputStream()));
+				String username = nameReader.readLine();
 				
 				ServerClient newClient = new ServerClient(username, clientSock);
 				System.out.println("New Connection: [" + username + "]");
@@ -38,12 +38,10 @@ public class GWackChannel {
 				}
 				sendToAll(memberlist);
 	
-				// start thread
 				(new ClientInputThread(newClient)).start();
 			}
 
 		} catch (Exception e) {
-			System.out.println("this");
 			System.err.println(e);
 			System.exit(1);
 		}
@@ -145,10 +143,14 @@ public class GWackChannel {
 			writer.println(str);
 			writer.flush();
 		}
-
 	}
+
 	public static void main(String[] args) {
-		int port = (args.length > 0) ? Integer.parseInt(args[0]) : 2022; 
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Server port : ");
+		int port = sc.nextInt();
+		// int port = 2022; 
 		(new GWackChannel(port)).serve();
+		sc.close();
 	}
 }

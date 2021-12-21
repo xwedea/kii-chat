@@ -1,4 +1,3 @@
-import java.util.*;
 import java.net.*;
 import java.io.*;
 import javax.swing.*;
@@ -21,15 +20,16 @@ public class ConnectionSession {
 			write = new PrintWriter(sock.getOutputStream());
 			read = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			r_thread = new readingThread();
+
+			// send username to server
+			write.println(name);
+			write.flush();
+
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(gui, "Connection failed!\n Exiting...");
 			// System.err.println("Catch 1 " + e);
 			// System.exit(1);
 		}
-	}
-
-	public void handleError() {
-
 	}
 
 	public void sendMessage(String s) {
@@ -45,9 +45,6 @@ public class ConnectionSession {
 			r_thread = new readingThread();
 			r_thread.start();
 
-			// send name to server
-			write.println(name);
-			write.flush();
 		} catch (Exception e) {
 			System.err.println(e);
 			System.exit(1);

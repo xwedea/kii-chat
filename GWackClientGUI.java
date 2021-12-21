@@ -1,9 +1,5 @@
-import java.util.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.net.*;
-import java.io.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -30,11 +26,11 @@ public class GWackClientGUI extends JFrame {
 	public JTextArea membersText = new JTextArea();
 	public JTextArea messagesText = new JTextArea();
 
-	public JButton connectButton = new JButton("Disconnect");
+	public JButton connectButton = new JButton("Connect");
 	public JButton sendButton = new JButton("Send");
 
 
-	public GWackClientGUI(String ip, int port) {
+	public GWackClientGUI() {
 		super();
 
 		// fundamentals
@@ -127,20 +123,10 @@ public class GWackClientGUI extends JFrame {
 
 		KeyListener k = new GuiKeyListener();
 		composeText.addKeyListener(k);
-	}
 
-	public void setupWindow(ConnectionSession cs) {
-		// set values
-		String ip = cs.sock.getRemoteSocketAddress().toString();
-		ip = cs.sock.getInetAddress().toString();
-
-		String port = String.valueOf(cs.sock.getPort());
-		this.nameField.setText(cs.clientName);
-		this.ipField.setText(ip);
-		this.portField.setText(port);
-		this.nameField.setEditable(false);
-		this.ipField.setEditable(false);
-		this.portField.setEditable(false);
+		this.nameField.setEditable(true);
+		this.ipField.setEditable(true);
+		this.portField.setEditable(true);
 		this.membersText.setEditable(false);
 		this.messagesText.setEditable(false);
 	}
@@ -155,40 +141,8 @@ public class GWackClientGUI extends JFrame {
 	}
 
 	public void getMessage(String s) {
-		if (s.charAt(0) == '[') 
+		if (s.charAt(0) == '[')
 			this.messagesText.append(s + "\n");
-	}
-
-	public String firstConnection(String credString) {
-		String secret = "3c3c4ac618656ae32b7f3431e75f7b26b1a14a87";
-		String[] creds = credString.split("-");
-
-		try {
-			if (!creds[0].equals("SECRET") || !creds[1].equals(secret) 
-					|| !creds[2].equals("NAME") || creds[3].length()<1) {
-				System.out.println("wrong credentials, exiting...");
-				System.exit(1);
-			}
-			// if (creds[0].equals("x")) {
-			// 	System.out.println("wrong credentials, exiting...");
-			// 	System.exit(1);
-			// }
-			
-		} catch (Exception e) {
-			System.err.println(e);
-			System.exit(1);
-		}
-
-		return creds[3];
-	}
-	public static String getCredentials() {
-		String creds = "";
-		Scanner scanner = new Scanner(System.in);
-		for (int i = 0; i < 4; i++) {
-			creds += scanner.nextLine() + "-";
-		}
-		// scanner.close();
-		return creds;
 	}
 
 	private class GuiKeyListener implements KeyListener {
@@ -198,30 +152,12 @@ public class GWackClientGUI extends JFrame {
 				composeText.setText("");
 			}
 		}
-		public void keyTyped(KeyEvent e){
-		}
-		public void keyReleased(KeyEvent e) {
-		}
+		public void keyTyped(KeyEvent e){}
+		public void keyReleased(KeyEvent e) {}
 	}
 
 	public static void main(String[] args) {
-		String host = "127.0.0.1";
-		int port = (args.length > 0) ? Integer.parseInt(args[0]) : 2022; 
-		// String host = "localhost";
-		GWackClientGUI client = null;
-		
-		try {
-			client = new GWackClientGUI(host, 2022);
-			String creds = "a-a-a-client" + (int)(100*Math.random());
-			creds = getCredentials();
-			String username = client.firstConnection(creds);
-			client.session = new ConnectionSession(client, username, host, 2022);
-			client.session.connect(username);
-		} catch (Exception e) {
-			System.err.println(e);
-			System.exit(1);
-		}
-		client.setupWindow(client.session);
+		GWackClientGUI client = new GWackClientGUI();
 		client.setVisible(true);
 	}
 
