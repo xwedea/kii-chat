@@ -2,4 +2,4 @@
 
 ```sh server.sh``` to setup a server
 
-```sh client.sh``` to start a GUI client
+```sh client.sh``` to start a client

@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class GWackClientGUI extends JFrame {
+public class KiiClientGUI extends JFrame {
 	public ConnectionSession session;
 
 	public JPanel topP = new JPanel();
@@ -30,7 +30,7 @@ public class GWackClientGUI extends JFrame {
 	public JButton sendButton = new JButton("Send");
 
 
-	public GWackClientGUI() {
+	public KiiClientGUI() {
 		super();
 
 		// fundamentals
@@ -157,7 +157,7 @@ public class GWackClientGUI extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		GWackClientGUI client = new GWackClientGUI();
+		KiiClientGUI client = new KiiClientGUI();
 		client.setVisible(true);
 	}
 

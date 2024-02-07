@@ -4,7 +4,7 @@ import javax.swing.*;
 
 
 public class ConnectionSession {
-	GWackClientGUI gui;
+	KiiClientGUI gui;
 	String clientName;
 	Socket sock;
 	PrintWriter write;
@@ -12,7 +12,7 @@ public class ConnectionSession {
 	readingThread r_thread;
 	public boolean closed = false;
 
-	public ConnectionSession(GWackClientGUI g, String name, String ip_addr, int port_no) {
+	public ConnectionSession(KiiClientGUI g, String name, String ip_addr, int port_no) {
 		try {
 			gui = g;
 			clientName = name;

@@ -2,12 +2,12 @@ import java.util.*;
 import java.net.*;
 import java.io.*;
 
-public class GWackChannel {
+public class KiiChannel {
 	public ServerSocket serverSock;
 	public volatile Queue<String> incomingMessages;
 	public LinkedList<ServerClient> clients;
 
-	public GWackChannel(int port) {
+	public KiiChannel(int port) {
 		try {
 			serverSock = new ServerSocket(port);
 			incomingMessages = new LinkedList<String>();
@@ -150,7 +150,7 @@ public class GWackChannel {
 		System.out.print("Server port : ");
 		int port = sc.nextInt();
 		// int port = 2022; 
-		(new GWackChannel(port)).serve();
+		(new KiiChannel(port)).serve();
 		sc.close();
 	}
 }
